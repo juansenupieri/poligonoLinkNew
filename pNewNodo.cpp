@@ -13,20 +13,19 @@ struct Nodo{
 void insertarNodoLista(Nodo *&lista, struct Punto );
 void mostrarNodoLista(Nodo *&lista);
 void borrarNodo(Nodo *&lista, struct Punto );
+double GetPerimetro(Nodo *&lista);
 
 int main(){
     Nodo *lista=NULL;
     Punto b;
-
-    insertarNodoLista(lista,b={3,4});
-    insertarNodoLista(lista,b={9,2});
-    insertarNodoLista(lista,b={7,8});
     
-    mostrarNodoLista(lista);
+    insertarNodoLista(lista,b={1,4});
+    insertarNodoLista(lista,b={3,4});
+    insertarNodoLista(lista,b={3,1});
+    insertarNodoLista(lista,b={1,1});
 
-    borrarNodo(lista,b = {7,8});
 
-    mostrarNodoLista(lista);
+    std::cout<<"El perimetro es:"<<GetPerimetro(lista)<<"\n";
 
     system("pause");
     return 0; 
@@ -50,7 +49,7 @@ void insertarNodoLista(Nodo *&lista, struct Punto punto){
         aux2->siguiente=new_nodo;
         new_nodo->siguiente=aux1;
     }
-    std::cout<<"El Vertice fue insertado exitosamente\n";
+    std::cout<<"El Vertice {x:"<<new_nodo->Punto.x<<",y:"<<new_nodo->Punto.y<<"} fue insertado exitosamente\n";
 };
 
 void mostrarNodoLista(Nodo *&lista){
@@ -85,3 +84,21 @@ void borrarNodo(Nodo *&lista, struct Punto punto){
         std::cout<<"El Vertice fue eliminado exitosamente\n";
     }
 } 
+
+
+double GetPerimetro(Nodo *&lista){
+    double res=0;
+    Nodo *temp = lista;
+    while(temp->siguiente != nullptr)
+    {
+        res += sqrt(pow(temp->Punto.x - temp->siguiente->Punto.x, 2) + 
+                    pow(temp->Punto.y - temp->siguiente->Punto.y, 2));
+        
+        temp = temp->siguiente;
+    }
+    
+    res += sqrt(pow(lista->Punto.x - temp->Punto.x, 2) + 
+                pow(lista->Punto.y - temp->Punto.y, 2));
+    
+    return res;
+}
